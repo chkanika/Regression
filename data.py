@@ -9,6 +9,7 @@ from sklearn import preprocessing, svm #scaling data, feature to be between -1 a
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 from matplotlib import style 
+import pickle 
 
 style.use('ggplot')
 
@@ -67,16 +68,12 @@ X_lately = X[-forecast_out:]
 df.dropna(inplace=True)
 
 y= np.array(df['label'])
-y= np.array(df['label'])
-
-
 print (len(X), len(y))
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
- #30% of the test size  
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2) #30% of the test size  
+pickle_in = open('linearregression.pickle', 'rb')
+clf = pickle.load(pickle_in)
 
-clf= LinearRegression(n_jobs=10) #to change algo, just switch linear regresion to svm.SVR(kernel= 'polynomial')
-clf.fit(X_train, y_train) #fit= train 
 accuracy = clf.score(X_test, y_test) #score = test
 
 # print(accuracy)
